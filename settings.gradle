@@ -1,1 +1,3 @@
 rootProject.name = 'learning'
+include 'learning-backend'
+include 'learning-ui'
