@@ -1,3 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
 rootProject.name = 'learning'
+
 include 'learning-backend'
 include 'learning-ui'
+
