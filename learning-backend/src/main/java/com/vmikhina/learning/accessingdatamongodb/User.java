@@ -3,10 +3,12 @@ package com.vmikhina.learning.accessingdatamongodb;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-public class Users {
+@Document(collection="user")
+public class User {
   @Id
   @Getter
   @Setter
@@ -30,9 +32,9 @@ public class Users {
   @Setter
   public Date birthday;
 
-  public Users(){}
+  public User(){}
 
-  public Users(String name, String email){
+  public User(String name, String email){
     this.name = name;
     this.email = email;
   }
