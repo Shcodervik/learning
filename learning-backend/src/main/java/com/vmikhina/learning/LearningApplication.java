@@ -1,6 +1,6 @@
 package com.vmikhina.learning;
 
-import com.vmikhina.learning.accessingdatamongodb.UserRepository;
+import com.vmikhina.learning.accessingdatamongodb.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class LearningApplication {
 
 	@Autowired
-	private UserRepository repository;
+	private HeroRepository repository;
 
 	private static final Logger LOG = Logger.getLogger(LearningApplication.class);
 
