@@ -2,6 +2,7 @@ package com.vmikhina.learning.accessingdatamongodb;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,9 @@ public class Hero {
   @Getter
   @Setter
   public String title;
-
+  @Getter
+  @Setter
+  public Binary image;
 
   public Hero(){}
 
