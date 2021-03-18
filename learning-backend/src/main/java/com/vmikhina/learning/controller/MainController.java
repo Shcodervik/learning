@@ -43,5 +43,11 @@ public class MainController {
     }
     throw new NoSuchElementException("Data not found");
   }
+  @GetMapping("/add/hero/{name}/{title}")
+  public ResponseEntity addHero(@PathVariable("name") String name, @PathVariable("title") String title) {
+    Hero hero = new Hero(name,title);
+    repository.save(hero);
+    return ResponseEntity.ok(hero);
+  }
 
 }
