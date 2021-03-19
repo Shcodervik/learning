@@ -3,6 +3,7 @@ package com.vmikhina.learning.controller;
 import com.vmikhina.learning.accessingdatamongodb.Hero;
 import com.vmikhina.learning.accessingdatamongodb.HeroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/hero")
 public class MainController {
   @Autowired
   private HeroRepository repository;
@@ -19,35 +21,50 @@ public class MainController {
   public ResponseEntity main(){
     return ResponseEntity.ok("works!");
   }
-  @GetMapping("/resources")
-  public ResponseEntity resource(){
+
+  @GetMapping
+  public ResponseEntity getHeroes(){
     List<Hero> heroes = repository.findAll();
     return ResponseEntity.ok(heroes);
   }
-  @GetMapping("/hero/{id}")
-  public ResponseEntity hero(@PathVariable("id") String id){
+
+  @GetMapping("/{id}")
+  public ResponseEntity getHero(@PathVariable String id){
     if (repository.findById(id).isPresent()) {
       Hero hero = repository.findById(id).get();
       return ResponseEntity.ok(hero);
     }
     throw new NoSuchElementException("Data not found");
   }
-  @GetMapping("/update/hero/{id}/{name}/{title}")
-  public ResponseEntity updateHero(@PathVariable("id") String id, @PathVariable("name") String name, @PathVariable("title") String title) {
+  @PutMapping("/{id}")
+  public ResponseEntity updateHero(@PathVariable("id") String id, @RequestBody Hero heroObj) {
     if (repository.findById(id).isPresent()){
       Hero hero = repository.findById(id).get();
-      hero.name = name;
-      hero.title = title;
+      hero.name = heroObj.getName();
+      hero.title = heroObj.getTitle();
       repository.save(hero);
       return ResponseEntity.ok(hero);
     }
     throw new NoSuchElementException("Data not found");
   }
-  @GetMapping("/add/hero/{name}/{title}")
-  public ResponseEntity addHero(@PathVariable("name") String name, @PathVariable("title") String title) {
-    Hero hero = new Hero(name,title);
+
+  @PostMapping
+  public ResponseEntity saveHero(@RequestBody Hero hero) {
     repository.save(hero);
     return ResponseEntity.ok(hero);
+  }
+
+  /**
+   * Here path variable with "id", in getHero method - without
+   * */
+  @DeleteMapping("/{id}")
+  public ResponseEntity deleteHero(@PathVariable("id") String id) {
+    if (repository.findById(id).isPresent()){
+      Hero hero = repository.findById(id).get();
+      repository.delete(hero);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    throw new NoSuchElementException("Data not found");
   }
 
 }
