@@ -30,18 +30,19 @@ public class MainController {
 
   @GetMapping("/{id}")
   public ResponseEntity getHero(@PathVariable String id){
-    if (repository.findById(id).isPresent()) {
-      Hero hero = repository.findById(id).get();
+    if (repository.findById(id).isPresent()) { // isPresent - check on null
+      Hero hero = repository.findById(id).get(); // get Hero from Optional<Hero>
       return ResponseEntity.ok(hero);
     }
     throw new NoSuchElementException("Data not found");
   }
   @PutMapping("/{id}")
   public ResponseEntity updateHero(@PathVariable("id") String id, @RequestBody Hero heroObj) {
-    if (repository.findById(id).isPresent()){
-      Hero hero = repository.findById(id).get();
+    if (repository.findById(id).isPresent()){ // isPresent - check on null
+      Hero hero = repository.findById(id).get(); // get Hero from Optional<Hero>
       hero.name = heroObj.getName();
       hero.title = heroObj.getTitle();
+      hero.image = heroObj.getImage();
       repository.save(hero);
       return ResponseEntity.ok(hero);
     }
@@ -59,8 +60,8 @@ public class MainController {
    * */
   @DeleteMapping("/{id}")
   public ResponseEntity deleteHero(@PathVariable("id") String id) {
-    if (repository.findById(id).isPresent()){
-      Hero hero = repository.findById(id).get();
+    if (repository.findById(id).isPresent()){ // isPresent - check on null
+      Hero hero = repository.findById(id).get(); // get Hero from Optional<Hero>
       repository.delete(hero);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
